@@ -32,6 +32,7 @@ function m6_washer_height() = 1.5;
 function m8_nut_G() = 14.38+1;
 function m8_nut_H() = 6.8+0.2;
 
+function m2p5_screw_diameter() = 2.5+0.3;
 function m2p5_nut_G() = 5.45+0.2;
 function m2p5_nut_H() = 2+0.2;
 
