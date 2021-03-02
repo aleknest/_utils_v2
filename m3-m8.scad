@@ -210,6 +210,30 @@ module m6n_screw_washer(thickness, diff=0.1, washer_out=0,washer_side_out=0,wash
 					,washer_spere=washer_spere);
 }
 
+module m3n_screw_washer(thickness
+						,diff=0.1
+						,washer_out=0
+						,washer_side_out=0
+						,washer_side_out_add=0
+						,washer_spere=false
+						,tnut=false
+						,cap_only=false
+)
+{
+	mn_screw_washer(screw_diameter=m3_screw_diameter()
+					,washer_diameter=cap_only?m3_cap_diameter():m3_washer_diameter()
+					,washer_height=m3_washer_thickness()
+					,thickness=thickness
+					,diff=diff
+					,washer_out=washer_out
+					,washer_side_out=washer_side_out
+					,washer_side_out_add=washer_side_out_add
+					,washer_spere=washer_spere
+					,tnut=tnut
+	);
+}
+m3n_screw_washer(thickness=3,tnut=true);
+
 module m5n_screw_washer_add()
 {
 	translate ([0,0,m5_washer_height()/2])
