@@ -69,16 +69,15 @@ module m3_washer_add(out=10)
 	translate ([0,0,-out+m3_washer_thickness()+out])
 		cylinder (d=m3_washer_diameter()+0.1,h=0.4,$fn=30);
 }
-module m3_square_nut(out=20,offs=0.2,short_fix=false)
+module m3_square_nut(out=20,offs=0.2,short_fix=false,out_diff=0.2)
 {
 	square=m3_square_nut_S()+offs;
 	translate ([-square/2,-square/2,0])
 	{
 		cube ([square,square+out,m3_square_nut_H()],false);
-		diff=0.2;
 		in=short_fix?2:0;
-		translate ([-diff,square-0.2-in,-diff])
-			cube ([square+diff*2,0.2+out,m3_square_nut_H()+diff*2],false);
+		translate ([-out_diff,square-0.2-in,-out_diff])
+			cube ([square+out_diff*2,0.2+out,m3_square_nut_H()+out_diff*2],false);
 	}
 }
 module m3_square_nut_planar(out=20)
@@ -112,9 +111,19 @@ module nut(G=undef,H,S=undef)
 	polygon (points=nut_points);
 }
 
+module m5_nut(h=m5_nut_H())
+{
+	nut(G=m5_nut_G()+0.25,H=h);//+0.3
+}
+
 module m3_nut(h=m3_nut_h())
 {
 	nut(G=m3_nut_G(),H=h);
+}
+
+module m2p5_nut(h=m2p5_nut_H())
+{
+	nut(G=m2p5_nut_G(),H=h);
 }
 
 module m3_nut_inner(h=m3_nut_h(),diff=0)
@@ -180,12 +189,13 @@ module m5n_screw_washer(thickness
 						,washer_side_out=0
 						,washer_side_out_add=0
 						,washer_spere=false
+						,washer_diameter=0
 						,tnut=false
 						,cap_only=false
 )
 {
 	mn_screw_washer(screw_diameter=m5_screw_diameter()
-					,washer_diameter=cap_only?m5_cap_diameter():m5_washer_diameter()
+					,washer_diameter=washer_diameter>0?washer_diameter:(cap_only?m5_cap_diameter():m5_washer_diameter())
 					,washer_height=m5_washer_height()
 					,thickness=thickness
 					,diff=diff
@@ -238,7 +248,7 @@ module m5n_screw_washer_add()
 {
 	translate ([0,0,m5_washer_height()/2])
 	{
-		cylinder (d=m5_washer_diameter()+0.2, h=0.3,$fn=40);
+		cylinder (d=m5_washer_diameter()+0.2, h=0.2,$fn=40);
 	}
 }
 
